@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.3
+-- version 4.6.5.2
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Oct 19, 2016 at 12:10 AM
--- Server version: 5.7.13
--- PHP Version: 7.0.8
+-- Host: localhost:3306
+-- Generation Time: Apr 05, 2017 at 11:47 AM
+-- Server version: 5.7.16
+-- PHP Version: 7.1.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `jimsjoint`
+-- Database: `frontend`
 --
 
 -- --------------------------------------------------------
@@ -26,8 +26,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `categories`
 --
 
-DROP TABLE IF EXISTS `Categories`;
-CREATE TABLE `Categories` (
+CREATE TABLE `categories` (
   `id` varchar(1) NOT NULL,
   `name` varchar(64) NOT NULL,
   `description` text NOT NULL,
@@ -38,9 +37,9 @@ CREATE TABLE `Categories` (
 -- Dumping data for table `categories`
 --
 
-INSERT INTO `Categories` (`id`, `name`, `description`, `image`) VALUES
+INSERT INTO `categories` (`id`, `name`, `description`, `image`) VALUES
 ('d', 'Drinks', 'Purees made from the finest of Venusian insects, government-inspected.', 'catd.png'),
-('m', 'Mains', 'Made from only the finest ingredients found deep in the Martian jungle, and harvested or slaughtered by academy-trained druids, we bring you 45 day aged premium "meat".', 'catm.png'),
+('m', 'Mains', 'Made from only the finest ingredients found deep in the Martian jungle, and harvested or slaughtered by academy-trained druids, we bring you 45 day aged premium \"meat\".', 'catm.png'),
 ('s', 'Sides', 'Perfect accompaniments to our mains, these side dish pairings have been exclsisvely formulated by Ben & Jerry.', 'cats.png');
 
 -- --------------------------------------------------------
@@ -56,35 +55,12 @@ CREATE TABLE `ci_sessions` (
   `data` blob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `menu`
+-- Dumping data for table `ci_sessions`
 --
 
-DROP TABLE IF EXISTS `Menu`;
-CREATE TABLE `Menu` (
-  `id` int(11) NOT NULL,
-  `name` varchar(32) NOT NULL,
-  `description` varchar(256) NOT NULL,
-  `price` decimal(10,2) NOT NULL,
-  `picture` varchar(100) NOT NULL,
-  `category` varchar(1) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `menu`
---
-
-INSERT INTO `Menu` (`id`, `name`, `description`, `price`, `picture`, `category`) VALUES
-(1, 'Cheese', 'Leave this raw milk, beefy and sweet cheese out for an hour before serving and pair with pear jam.', '2.95', '1.png', 's'),
-(2, 'Turkey', 'Roasted, succulent, stuffed, lovingly sliced turkey breast', '5.95', '2.png', 'm'),
-(6, 'Donut', 'Disgustingly sweet, topped with artery clogging chocolate and then sprinkled with Pixie dust', '1.25', '6.png', 's'),
-(10, 'Bubbly', '1964 Moet Charmon, made from grapes crushed by elves with clean feet, perfectly chilled.', '14.50', '10.png', 'd'),
-(11, 'Ice Cream', 'Combination of decadent chocolate topped with luscious strawberry, churned by gifted virgins using only cream from the Tajima strain of wagyu cattle', '3.75', '11.png', 's'),
-(8, 'Hot Dog', 'Pork trimmings mixed with powdered preservatives, flavourings, red colouring and drenched in water before being squeezed into plastic tubes. Topped with onions, bacon, chili or cheese - no extra charge.', '6.90', '8.png', 'm'),
-(25, 'Burger', 'Half-pound of beef, topped with bacon and served with your choice of a slice of American cheese, red onion, sliced tomato, and Heart Attack Grill\'s own unique special sauce.', '9.99', 'burger.png', 'm'),
-(21, 'Coffee', 'A delicious cup of the nectar of life, saviour of students, morning kick-starter; made with freshly grounds that you don\'t want to know where they came from!', '2.95', 'coffee.png', 'd');
+INSERT INTO `ci_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
+('tgafojll6oqm5p62gsbobbiv07', '127.0.0.1', 1491417993, 0x5f5f63695f6c6173745f726567656e65726174657c693a313439313431373939333b);
 
 -- --------------------------------------------------------
 
@@ -92,8 +68,7 @@ INSERT INTO `Menu` (`id`, `name`, `description`, `price`, `picture`, `category`)
 -- Table structure for table `orderitems`
 --
 
-DROP TABLE IF EXISTS `Orderitems`;
-CREATE TABLE `Orderitems` (
+CREATE TABLE `orderitems` (
   `order` int(11) NOT NULL,
   `item` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
@@ -106,8 +81,7 @@ CREATE TABLE `Orderitems` (
 -- Table structure for table `orders`
 --
 
-DROP TABLE IF EXISTS `Orders`;
-CREATE TABLE `Orders` (
+CREATE TABLE `orders` (
   `num` int(11) NOT NULL,
   `date` datetime NOT NULL,
   `status` varchar(1) NOT NULL,
@@ -122,7 +96,7 @@ CREATE TABLE `Orders` (
 --
 -- Indexes for table `categories`
 --
-ALTER TABLE `Categories`
+ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -132,21 +106,15 @@ ALTER TABLE `ci_sessions`
   ADD KEY `ci_sessions_timestamp` (`timestamp`);
 
 --
--- Indexes for table `menu`
---
-ALTER TABLE `Menu`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `orderitems`
 --
-ALTER TABLE `Orderitems`
+ALTER TABLE `orderitems`
   ADD PRIMARY KEY (`order`,`item`);
 
 --
 -- Indexes for table `orders`
 --
-ALTER TABLE `Orders`
+ALTER TABLE `orders`
   ADD PRIMARY KEY (`num`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
